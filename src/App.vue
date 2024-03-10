@@ -1,9 +1,7 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-    </nav>
-    <router-view />
+  <div class="main">
+    <NavigationComponent />
+    <router-view v-bind:cities="cities" />
   </div>
 </template>
 
@@ -16,9 +14,13 @@ import {
   updateDoc,
   doc as firestoreDoc,
 } from "firebase/firestore"; // Import Firestore methods
+import NavigationComponent from "./components/Navigation.vue";
 
 export default {
   name: "App",
+  components: {
+    NavigationComponent,
+  },
   data() {
     return {
       APIkey: "91fc93d15a4ac9726b4b3ed681c1b3a3",
@@ -69,5 +71,14 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: "Quicksand", sans-serif;
+}
+
+.main {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 100vh;
+  .container {
+    padding: 0 20px;
+  }
 }
 </style>
