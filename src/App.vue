@@ -5,8 +5,11 @@
       v-on:close-modal="toggleModal"
       :APIkey="APIkey"
     />
-    <NavigationComponent v-on:add-city="toggleModal" />
-    <router-view :cities="cities" />
+    <NavigationComponent
+      v-on:add-city="toggleModal"
+      v-on:edit-city="toggleEdit"
+    />
+    <router-view :cities="cities" :edit="edit" />
   </div>
 </template>
 
@@ -35,6 +38,7 @@ export default {
       APIkey: "91fc93d15a4ac9726b4b3ed681c1b3a3",
       cities: [],
       modalOpen: null,
+      edit: null,
     };
   },
   created() {
@@ -74,6 +78,9 @@ export default {
     },
     toggleModal() {
       this.modalOpen = !this.modalOpen;
+    },
+    toggleEdit() {
+      this.edit = !this.edit;
     },
   },
 };

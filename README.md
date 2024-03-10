@@ -32,3 +32,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+
+## TO DO
+- [] Mudar api key do weatherapp para vir de uma variavel do ambiente
