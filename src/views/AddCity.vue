@@ -28,6 +28,7 @@ export default {
   background-color: #31363d;
   width: 100%;
   height: 100vh;
+  grid-auto-rows: 250px;
   @media (min-width: 400px) {
     grid-template-columns: repeat(2, 1fr);
   }

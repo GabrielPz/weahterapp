@@ -15,6 +15,16 @@
 
 <script>
 import axios from "axios";
+import { db } from "../firebase/firebaseinit"; // Import db from your Firebase init file
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  addDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore"; // Import Firestore methods
+
 export default {
   name: "ModalComponent",
   props: ["APIkey"],
@@ -34,11 +44,21 @@ export default {
         alert("Campo não pod estar vazio");
         return;
       }
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.APIkey}`
-      );
-      const data = await response.data;
-      console.log(data);
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.APIkey}`
+        );
+        const data = await response.data;
+        console.log(data);
+        await addDoc(collection(db, "cities"), {
+          city: this.city,
+          currentWeather: data,
+        });
+        this.city = "";
+        this.$emit("close-modal");
+      } catch (err) {
+        alert("Erro ao adicioanr a cidade");
+      }
     },
   },
 };
