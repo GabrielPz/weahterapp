@@ -1,6 +1,7 @@
 <template>
   <div class="main">
-    <NavigationComponent />
+    <modal-component v-if="modalOpen" v-on:close-modal="toggleModal" />
+    <NavigationComponent v-on:add-city="toggleModal" />
     <router-view v-bind:cities="cities" />
   </div>
 </template>
@@ -8,23 +9,21 @@
 <script>
 import axios from "axios";
 import { db } from "./firebase/firebaseinit"; // Import db from your Firebase init file
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc as firestoreDoc,
-} from "firebase/firestore"; // Import Firestore methods
+import { collection, getDocs, updateDoc } from "firebase/firestore"; // Import Firestore methods
 import NavigationComponent from "./components/Navigation.vue";
+import ModalComponent from "./components/Modal.vue";
 
 export default {
   name: "App",
   components: {
     NavigationComponent,
+    ModalComponent,
   },
   data() {
     return {
       APIkey: "91fc93d15a4ac9726b4b3ed681c1b3a3",
       cities: [],
+      modalOpen: null,
     };
   },
   created() {
@@ -61,6 +60,9 @@ export default {
         console.error("Error fetching cities: ", error);
       }
     },
+    toggleModal() {
+      this.modalOpen = !this.modalOpen;
+    },
   },
 };
 </script>
@@ -77,6 +79,8 @@ export default {
   max-width: 1024px;
   margin: 0 auto;
   height: 100vh;
+  display: flex;
+  justify-content: center; /* Centraliza a MOdal */
   .container {
     padding: 0 20px;
   }

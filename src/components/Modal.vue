@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" ref="modal">
+  <div @click="closeModal" class="modal" ref="modal">
     <div class="modal-wrap" ref="modalWrap">
       <label for="city-name">Insira o nome da Cidade:</label>
       <input
@@ -19,6 +19,13 @@ export default {
     return {
       city: null,
     };
+  },
+  methods: {
+    closeModal(e) {
+      if (e.target === this.$refs.modal) {
+        this.$emit("close-modal");
+      }
+    },
   },
 };
 </script>
