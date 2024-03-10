@@ -47,7 +47,7 @@ export default {
   methods: {
     async getCityWeather() {
       const citiesCollectionRef = collection(db, "cities");
-      const q = query(citiesCollectionRef); // Apply any query constraints here
+      const q = query(citiesCollectionRef);
 
       onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach(async (change) => {
@@ -72,6 +72,12 @@ export default {
             //Se é um novo documento do firebase, significa que foi uma cidade adicionada recentemente
             //portanto apenas seus dados são passados e nenhuma nova chamada a api do weathermap é feita
             this.cities.push(change.doc.data());
+          } else if (change.type === "removed") {
+            //Caso a snapshot seja do tipo removed significa que a cidade em questão foi deletada no firestore
+            //logo deletamos ela do app
+            this.cities = this.cities.filter(
+              (city) => city.city !== change.doc.data().city
+            );
           }
         });
       });

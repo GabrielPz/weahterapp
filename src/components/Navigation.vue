@@ -3,7 +3,7 @@
     <nav>
       <span>Adicionar Cidade</span>
       <div class="right">
-        <i @click="editCity" class="far fa-edit"></i>
+        <i @click="editCity" ref="editCities" class="far fa-edit"></i>
         <i @click="reloadApp" class="fas fa-sync"></i>
         <i @click="addCity" class="fas fa-plus"></i>
       </div>
@@ -22,6 +22,7 @@ export default {
       location.reload();
     },
     editCity() {
+      this.$refs.editCities.classList.toggle("edit-active");
       this.$emit("edit-city");
     },
   },
@@ -45,9 +46,13 @@ header {
     padding: 30px;
     justify-content: space-between;
   }
+  .edit-active {
+    color: rgba(210, 75, 75, 1);
+  }
   .right {
     i {
       font-size: 20px;
+      cursor: pointer;
     }
     i:nth-child(2),
     i:nth-child(3) {

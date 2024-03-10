@@ -3,7 +3,7 @@
     <i
       v-if="edit"
       @click="removeCity"
-      class="far fa-trash-alt edit"
+      class="far fa-trash-alt remove"
       ref="edit"
     ></i>
     <span>
@@ -82,11 +82,12 @@ export default {
   color: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-  .edit {
+  .remove {
     border-radius: 0px 15px 0 0;
     border: 10px solid rgb(77, 77, 77);
     background-color: rgb(77, 77, 77);
     z-index: 1;
+    cursor: pointer;
     font-size: 20px;
     position: absolute;
     bottom: 0px;
