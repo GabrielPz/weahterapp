@@ -1,8 +1,12 @@
 <template>
   <div class="main">
-    <modal-component v-if="modalOpen" v-on:close-modal="toggleModal" />
+    <modal-component
+      v-if="modalOpen"
+      v-on:close-modal="toggleModal"
+      :APIkey="APIkey"
+    />
     <NavigationComponent v-on:add-city="toggleModal" />
-    <router-view v-bind:cities="cities" />
+    <router-view :cities="cities" />
   </div>
 </template>
 

@@ -8,16 +8,19 @@
         placeholder="Procure pelo nome da cidade"
         v-model="city"
       />
+      <button @click="addCity">Adicionar</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ModalComponent",
+  props: ["APIkey"],
   data() {
     return {
-      city: null,
+      city: "",
     };
   },
   methods: {
@@ -25,6 +28,17 @@ export default {
       if (e.target === this.$refs.modal) {
         this.$emit("close-modal");
       }
+    },
+    async addCity() {
+      if (this.city === "") {
+        alert("Campo não pod estar vazio");
+        return;
+      }
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.APIkey}`
+      );
+      const data = await response.data;
+      console.log(data);
     },
   },
 };
