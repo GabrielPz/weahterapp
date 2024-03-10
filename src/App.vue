@@ -51,19 +51,22 @@ export default {
           const cityData = change.doc.data();
           const cityId = change.doc.id;
           if (change.type === "added" && !hasPendingChanges) {
+            //Caso sejam cidades que já estão cadastradas no firebase, inicializar a página seus dados são atualizados
             const response = await axios.get(
               `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&appid=${this.APIkey}`
             );
             const weatherData = response.data;
             this.cities.push({
-              ...cityData, // Spread the existing city data
-              currentWeather: weatherData, // Add the new weather data
+              ...cityData,
+              currentWeather: weatherData,
             });
             const cityDocRef = change.doc.ref;
             await updateDoc(cityDocRef, {
-              currentWeather: weatherData, // Updating the document with weather data
+              currentWeather: weatherData,
             });
           } else if (change.type === "added" && hasPendingChanges) {
+            //Se é um novo documento do firebase, significa que foi uma cidade adicionada recentemente
+            //portanto apenas seus dados são passados e nenhuma nova chamada a api do weathermap é feita
             this.cities.push(change.doc.data());
           }
         });
@@ -75,68 +78,6 @@ export default {
   },
 };
 </script>
-<!-- <script>
-import axios from "axios";
-import { db } from "./firebase/firebaseinit"; // Import db from your Firebase init file
-import { Firestore, collection, getDocs, updateDoc,  } from "firebase/firestore"; // Import Firestore methods
-import NavigationComponent from "./components/Navigation.vue";
-import ModalComponent from "./components/Modal.vue";
-
-export default {
-  name: "App",
-  components: {
-    NavigationComponent,
-    ModalComponent,
-  },
-  data() {
-    return {
-      APIkey: "91fc93d15a4ac9726b4b3ed681c1b3a3",
-      cities: [],
-      modalOpen: null,
-    };
-  },
-  created() {
-    this.getCityWeather();
-  },
-  methods: {
-    async getCityWeather() {
-      try {
-        const querySnapshot = await getDocs(collection(db, "cities"));
-        
-        for (const doc of querySnapshot.docs) {
-          const cityData = doc.data();
-          console.log(doc)
-          try {
-            const response = await axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&appid=${this.APIkey}`
-            );
-            const weatherData = response.data;
-            this.cities.push({
-              ...cityData, // Spread the existing city data
-              weather: weatherData, // Add the new weather data
-            });
-            const cityDocRef = doc.ref;
-            await updateDoc(cityDocRef, {
-              currentWeather: weatherData, // Updating the document with weather data
-            });
-          } catch (err) {
-            console.error(
-              "Error fetching weather for city: ",
-              cityData.city,
-              err
-            );
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching cities: ", error);
-      }
-    },
-    toggleModal() {
-      this.modalOpen = !this.modalOpen;
-    },
-  },
-};
-</script> -->
 
 <style lang="scss">
 * {

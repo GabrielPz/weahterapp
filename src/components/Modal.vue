@@ -16,14 +16,7 @@
 <script>
 import axios from "axios";
 import { db } from "../firebase/firebaseinit"; // Import db from your Firebase init file
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  addDoc,
-  doc,
-  setDoc,
-} from "firebase/firestore"; // Import Firestore methods
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore methods
 
 export default {
   name: "ModalComponent",
