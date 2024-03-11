@@ -8,7 +8,15 @@
         placeholder="Procure pelo nome da cidade"
         v-model="city"
       />
-      <button @click="addCity">Adicionar</button>
+      <!-- <button @click="addCity">Adicionar</button> -->
+      <v-btn
+        :loading="loading"
+        :disabled="loading"
+        color="secondary"
+        @click="addCity"
+      >
+        Adicionar
+      </v-btn>
     </div>
   </div>
 </template>
@@ -24,6 +32,7 @@ export default {
   data() {
     return {
       city: "",
+      loading: false,
     };
   },
   methods: {
@@ -37,6 +46,7 @@ export default {
         alert("Campo não pod estar vazio");
         return;
       }
+      this.loading = true;
       try {
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=${this.APIkey}`
@@ -48,9 +58,11 @@ export default {
           currentWeather: data,
         });
         this.city = "";
+        this.loading = false;
         this.$emit("close-modal");
       } catch (err) {
-        alert("Erro ao adicioanr a cidade");
+        alert("Erro ao adicioanar a cidade");
+        this.loading = false;
       }
     },
   },
