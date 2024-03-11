@@ -19,12 +19,12 @@ npm run serve
 ## Tecnologias
 ### Tecnologias utilizadas na aplicação
 
--[x] Prettier
--[x] EsLint
--[x] Vuetify
--[x] ApexCharts
--[x] Jest
--[x] Typescript
--[x] Firebase/Firestore
--[x] Vue
--[x] Cypress(configs iniciais)
+- [x] Prettier
+- [x] EsLint
+- [x] Vuetify
+- [x] ApexCharts
+- [x] Jest
+- [x] Typescript
+- [x] Firebase/Firestore
+- [x] Vue
+- [x] Cypress(configs iniciais)
