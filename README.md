@@ -6,6 +6,9 @@ Aplicação desenvolvida para obter dados dinâmicos da API do OpenWeatherMap, u
 ![Tela Inicial](./src/assets/homeView.jpeg)
 ![Informações do tempo](./src/assets/detailedWeather.jpeg)
 
+## Deploy
+A aplicação se encontra hospedada na vercel: https://weatherapp-eight-silk.vercel.app/
+
 ## Configuração
 Para instalar as dependências da aplicação, execute o seguinte comando:
 ```
