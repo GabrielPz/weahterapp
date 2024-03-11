@@ -1,5 +1,5 @@
 <template>
-  <div class="city">
+  <div @click="goToWeather" class="city">
     <i
       v-if="edit"
       @click="removeCity"
@@ -66,6 +66,13 @@ export default {
       } catch (error) {
         console.error("Error removing city: ", error);
       }
+    },
+    goToWeather(e) {
+      if (e.target === this.$refs.edit) {
+        //Não executa nada caso o modo d exclusão estiver ativo
+        return;
+      }
+      this.$router.push({ name: "Weather", params: { city: this.city.city } });
     },
   },
 };

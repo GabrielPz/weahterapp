@@ -9,7 +9,7 @@
       v-on:add-city="toggleModal"
       v-on:edit-city="toggleEdit"
     />
-    <router-view :cities="cities" :edit="edit" />
+    <router-view :cities="cities" :edit="edit" :APIkey="APIkey" />
   </div>
 </template>
 
@@ -17,9 +17,7 @@
 import axios from "axios";
 import { db } from "./firebase/firebaseinit"; // Import db from your Firebase init file
 import {
-  Firestore,
   collection,
-  getDocs,
   updateDoc,
   onSnapshot,
   query,
