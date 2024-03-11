@@ -8,7 +8,6 @@
         placeholder="Procure pelo nome da cidade"
         v-model="city"
       />
-      <!-- <button @click="addCity">Adicionar</button> -->
       <v-btn
         :loading="loading"
         :disabled="loading"
@@ -23,8 +22,8 @@
 
 <script>
 import axios from "axios";
-import { db } from "../firebase/firebaseinit"; // Import db from your Firebase init file
-import { collection, addDoc } from "firebase/firestore"; // Import Firestore methods
+import { db } from "../firebase/firebaseinit";
+import { collection, addDoc } from "firebase/firestore";
 
 export default {
   name: "ModalComponent",

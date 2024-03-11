@@ -1,16 +1,16 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import WeatherChart from '../../src/components/WeatherChart.vue';
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import WeatherChart from "../../src/components/WeatherChart.vue";
 
 const localVue = createLocalVue();
-localVue.component('ApexChart', {
+localVue.component("ApexChart", {
   render: () => {},
   methods: {
     renderChart: () => {},
   },
 });
 
-describe('WeatherChart', () => {
-  it('computes series data correctly from chartData prop', () => {
+describe("WeatherChart", () => {
+  it("computes series data correctly from chartData prop", () => {
     const chartDataMock = [
       { current: { temp: 22, feels_like: 21 } },
       { current: { temp: 23, feels_like: 22 } },

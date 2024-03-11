@@ -1,20 +1,20 @@
 // AddCity.spec.ts
-import { shallowMount, createLocalVue, Wrapper } from '@vue/test-utils';
-import Vuetify from 'vuetify';
-import Vue from 'vue';
-import AddCity from '../../src/views/AddCity.vue';
-import CityComponent from '../../src/components/City.vue';
+import { shallowMount, createLocalVue, Wrapper } from "@vue/test-utils";
+import Vuetify from "vuetify";
+import Vue from "vue";
+import AddCity from "../../src/views/AddCity.vue";
+import CityComponent from "../../src/components/City.vue";
 
 Vue.use(Vuetify);
 
-jest.mock('@/components/City.vue', () => ({
-  name: 'CityComponent',
-  template: '<div></div>',
+jest.mock("@/components/City.vue", () => ({
+  name: "CityComponent",
+  template: "<div></div>",
 }));
 
 const localVue = createLocalVue();
 
-describe('AddCity.vue', () => {
+describe("AddCity.vue", () => {
   let wrapper: Wrapper<Vue>;
   let vuetify: any;
 
@@ -24,7 +24,7 @@ describe('AddCity.vue', () => {
       localVue,
       vuetify,
       propsData: {
-        cities: [{ city: 'City Name', currentWeather: { main: { temp: 22 } } }],
+        cities: [{ city: "Caruaru", currentWeather: { main: { temp: 22 } } }],
         edit: false,
       },
       stubs: {
@@ -33,18 +33,17 @@ describe('AddCity.vue', () => {
     });
   });
 
-  it('renders without crashing', () => {
+  it("renders without crashing", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
   it('emits "edit-city" event when toggleEdit method is called', async () => {
     await (wrapper.vm as any).toggleEdit();
-    expect(wrapper.emitted('edit-city')).toBeTruthy();
+    expect(wrapper.emitted("edit-city")).toBeTruthy();
   });
 
   it('emits "disable-remove" event when disableRemove method is called', async () => {
     await (wrapper.vm as any).disableRemove();
-    expect(wrapper.emitted('disable-remove')).toBeTruthy();
+    expect(wrapper.emitted("disable-remove")).toBeTruthy();
   });
-
 });

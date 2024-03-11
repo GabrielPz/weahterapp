@@ -10,10 +10,12 @@
       <div class="high-low-temperatures">
         <div class="high">
           <i class="fas fa-chevron-up"></i>
+          <span>Temp Max</span>
           <span>{{ Math.round(this.currentWeather.main.temp_max) }}&deg;</span>
         </div>
         <div class="low">
           <i class="fas fa-chevron-down"></i>
+          <span>Temp Min</span>
           <span>{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span>
         </div>
       </div>

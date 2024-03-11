@@ -1,13 +1,13 @@
 // NavigationComponent.spec.ts
 
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuetify from 'vuetify';
-import NavigationComponent from '../../src/components/Navigation.vue';
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import Vuetify from "vuetify";
+import NavigationComponent from "../../src/components/Navigation.vue";
 
 // Create a local Vue instance to use Vuetify
 const localVue = createLocalVue();
 
-describe('NavigationComponent', () => {
+describe("NavigationComponent", () => {
   let vuetify: any;
   // Save the original window.location
   const originalLocation = window.location;
@@ -16,7 +16,7 @@ describe('NavigationComponent', () => {
     vuetify = new Vuetify();
 
     // Mock just the reload function on the location object
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(window, "location", {
       writable: true,
       value: { reload: jest.fn() },
     });
@@ -27,7 +27,7 @@ describe('NavigationComponent', () => {
     window.location = originalLocation;
   });
 
-  it('emits add-city event when addCity method is called', async () => {
+  it("emits add-city event when addCity method is called", async () => {
     const wrapper = shallowMount(NavigationComponent, {
       localVue,
       vuetify,
@@ -39,10 +39,10 @@ describe('NavigationComponent', () => {
     });
 
     await (wrapper.vm as any).addCity();
-    expect(wrapper.emitted()['add-city']).toBeTruthy();
+    expect(wrapper.emitted()["add-city"]).toBeTruthy();
   });
 
-  it('emits edit-city event when editCity method is called', async () => {
+  it("emits edit-city event when editCity method is called", async () => {
     const wrapper = shallowMount(NavigationComponent, {
       localVue,
       vuetify,
@@ -54,10 +54,10 @@ describe('NavigationComponent', () => {
     });
 
     await (wrapper.vm as any).editCity();
-    expect(wrapper.emitted()['edit-city']).toBeTruthy();
+    expect(wrapper.emitted()["edit-city"]).toBeTruthy();
   });
 
-  it('calls window.location.reload when reloadApp method is called', async () => {
+  it("calls window.location.reload when reloadApp method is called", async () => {
     const wrapper = shallowMount(NavigationComponent, {
       localVue,
       vuetify,
