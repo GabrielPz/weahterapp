@@ -25,10 +25,6 @@
         {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span
       >
     </div>
-    <div class="weather-icon">
-      <img v-if="isDay" src="../../public/sun.png" alt="" />
-      <img v-if="isNight" src="../../public/moon.png" alt="" />
-    </div>
   </div>
 </template>
 
@@ -46,7 +42,7 @@ export default {
 
   .container {
     margin: 30px 0;
-    min-height: 366px;
+    min-height: 250px;
     position: relative;
     display: flex;
     color: #fff;

@@ -1,15 +1,16 @@
 <template>
   <div class="main">
-    <v-progress-circular
-      v-if="loading"
-      :size="70"
-      :width="7"
-      color="purple"
-      indeterminate
-    ></v-progress-circular>
-    <div v-else class="weather" :class="{ day: isDay, night: isNight }">
+    <div class="weather" :class="{ day: isDay, night: isNight }">
       <div class="weather-wrap"></div>
+      <v-progress-circular
+        v-if="loading"
+        :size="70"
+        :width="7"
+        color="purple"
+        indeterminate
+      ></v-progress-circular>
       <current-weather
+        v-else
         :isDay="isDay"
         :isNight="isNight"
         :currentWeather="currentWeather"

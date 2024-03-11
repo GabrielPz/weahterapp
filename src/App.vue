@@ -133,7 +133,7 @@ export default {
 }
 
 .main {
-  max-width: 1024px;
+  /* max-width: 1024px; */
   width: 100% !important;
   margin: 0 auto;
   height: 100vh !important;
