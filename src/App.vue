@@ -131,7 +131,7 @@ export default {
 
 .main {
   /* max-width: 1024px; */
-  width: 100%;
+  width: 100% !important;
   margin: 0 auto;
   height: 100vh;
   display: flex;

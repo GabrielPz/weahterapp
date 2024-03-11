@@ -32,7 +32,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { db } from "../firebase/firebaseinit"; // Import db from your Firebase init file
 import {
@@ -49,6 +48,7 @@ export default {
   data() {
     return {
       id: null,
+      overlay: false,
     };
   },
   methods: {

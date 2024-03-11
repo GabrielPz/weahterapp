@@ -54,14 +54,15 @@ export default {
 }
 
 header {
-  z-index: 99;
-  position: fixed;
+  z-index: 99 !important;
+  position: fixed !important;
   /* max-width: 1024px; */
-  width: 100%;
+  width: 100 !important;
   nav {
     display: flex;
     color: #fff;
     padding: 30px 0;
+    min-width: 100% !important;
     justify-content: space-between;
   }
 
