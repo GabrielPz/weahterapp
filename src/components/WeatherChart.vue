@@ -13,10 +13,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import { db } from "../firebase/firebaseinit";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import ApexCharts from "vue-apexcharts";
 import VueApexCharts from "vue-apexcharts";
 export default {
   name: "WeatherChart",
