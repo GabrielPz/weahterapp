@@ -22,6 +22,7 @@
       v-on:is-night="nightTime"
       v-on:resetTime="resetTime"
       v-on:edit-city="toggleEdit"
+      v-on:disable-remove="disableRemove"
     />
   </v-app>
 </template>
@@ -97,6 +98,9 @@ export default {
     },
     toggleEdit() {
       this.edit = !this.edit;
+    },
+    disableRemove() {
+      this.edit = null;
     },
     checkRoute() {
       if (this.$route.name === "AddCity") {

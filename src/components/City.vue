@@ -88,7 +88,7 @@ export default {
       if (e.target === this.$refs.edit) {
         return;
       } else {
-        this.$emit("edit-city");
+        this.$emit("disable-remove");
         this.$router.push({
           name: "Weather",
           params: { city: this.city.city },

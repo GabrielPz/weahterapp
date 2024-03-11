@@ -1,7 +1,12 @@
 <template>
   <div class="grid">
     <div class="city-link" v-for="(city, index) in cities" v-bind:key="index">
-      <city-component v-on:edit-city="toggleEdit" :city="city" :edit="edit" />
+      <city-component
+        v-on:edit-city="toggleEdit"
+        v-on:disable-remove="disableRemove"
+        :city="city"
+        :edit="edit"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +26,9 @@ export default {
   methods: {
     toggleEdit() {
       this.$emit("edit-city");
+    },
+    disableRemove() {
+      this.$emit("disable-remove");
     },
   },
 };

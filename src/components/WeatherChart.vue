@@ -76,7 +76,7 @@ export default {
           curve: "smooth",
         },
         title: {
-          text: "Temperatua média & Sensação Térmica",
+          text: "Temperatura média & Sensação Térmica",
           align: "left",
           style: {
             color: "#fff", // White color for the title
@@ -108,7 +108,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: "Temperature",
+            text: "Temperatura",
             style: {
               color: "#fff", // White color for y-axis title
             },
@@ -118,6 +118,9 @@ export default {
               colors: ["#fff"], // White color for y-axis labels
             },
           },
+        },
+        series: {
+          color: "#fff",
         },
         legend: {
           color: "#fff",

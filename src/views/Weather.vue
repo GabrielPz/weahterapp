@@ -1,20 +1,25 @@
 <template>
   <div class="main">
     <div class="weather" :class="{ day: isDay, night: isNight }">
-      <div class="weather-wrap"></div>
-      <v-progress-circular
-        v-if="loading"
-        :size="70"
-        :width="7"
-        color="purple"
-        indeterminate
-      ></v-progress-circular>
-      <current-weather
-        :isDay="isDay"
-        :isNight="isNight"
-        :currentWeather="currentWeather"
-      />
-      <weather-chart :isDay="isDay" :isNight="isNight" :chartData="chartData" />
+      <div class="weather-wrap">
+        <v-progress-circular
+          v-if="loading"
+          :size="70"
+          :width="7"
+          color="blue"
+          indeterminate
+        ></v-progress-circular>
+        <current-weather
+          :isDay="isDay"
+          :isNight="isNight"
+          :currentWeather="currentWeather"
+        />
+        <weather-chart
+          :isDay="isDay"
+          :isNight="isNight"
+          :chartData="chartData"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -49,8 +54,6 @@ export default {
   },
   methods: {
     async getWeather() {
-      const end = Math.floor(Date.now() / 1000); //Dia de hoje em UNIX
-      const start = end - 5 * 24 * 60 * 60; //% dais atrás em UNIX
       try {
         const q = query(
           collection(db, "cities"),
@@ -108,12 +111,9 @@ export default {
             },
           }
         );
-
         historicalData.push(response.data);
-        // Assuming you want to aggregate data; adjust according to your needs
       }
-
-      this.chartData = historicalData; // Assuming you want to store all 5 days data
+      this.chartData = historicalData;
       this.loading = false;
       this.getCurrentTime();
     },
@@ -126,7 +126,7 @@ export default {
   transition: 500ms ease;
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
 
   .weather-wrap {
     overflow: hidden;
