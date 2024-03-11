@@ -1,14 +1,34 @@
 <template>
-  <h1>oi</h1>
+  <div class="main">
+    <v-progress-circular
+      v-if="loading"
+      :size="70"
+      :width="7"
+      color="purple"
+      indeterminate
+    ></v-progress-circular>
+    <div v-else class="weather" :class="{ day: isDay, night: isNight }">
+      <div class="weather-wrap"></div>
+      <current-weather
+        :isDay="isDay"
+        :isNight="isNight"
+        :currentWeather="currentWeather"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import { db } from "../firebase/firebaseinit";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import CurrentWeather from "../components/CurrentWeather.vue";
 export default {
   name: "WeatherView",
-  props: ["APIkey"],
+  props: ["APIkey", "isDay", "isNight"],
+  components: {
+    CurrentWeather,
+  },
   data() {
     return {
       forecast: null,
@@ -36,20 +56,17 @@ export default {
         querySnapshot.forEach(async (document) => {
           this.currentWeather = document.data().currentWeather;
           const coordinates = this.currentWeather.coord;
-          this.getCurrentTime();
-          //   axios
-          //     .get(
-          //       `https://history.openweathermap.org/data/2.5/history/city?lat=${coordinates.lat}&lon=${coordinates.lon}&type=hour&start=${start}&end=${end}&appid=${this.APIkey}`
-          //     )
-          //     .then((res) => {
-          //       this.forecast = res.data;
-          //     })
-          //     .then(() => {
-          //       this.loading = false;
-          //       this.getCurrentTime();
-          //       console.log(this.forecast);
-          //       console.log(this.currentWeather);
-          //     });
+          axios
+            .get(
+              `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&appid=${this.APIkey}`
+            )
+            .then((res) => {
+              this.forecast = res.data;
+            })
+            .then(() => {
+              this.loading = false;
+              this.getCurrentTime();
+            });
         });
       } catch (error) {
         console.error("Error removing city: ", error);
@@ -70,4 +87,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.weather {
+  transition: 500ms ease;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+
+  .weather-wrap {
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+</style>

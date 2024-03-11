@@ -16,6 +16,8 @@
       :cities="cities"
       :edit="edit"
       :APIkey="APIkey"
+      :isDay="isDay"
+      :isNight="isNight"
       v-on:is-day="dayTime"
       v-on:is-night="nightTime"
       v-on:resetTime="resetTime"
@@ -131,7 +133,7 @@ export default {
 }
 
 .main {
-  /* max-width: 1024px; */
+  max-width: 1024px;
   width: 100% !important;
   margin: 0 auto;
   height: 100vh !important;
