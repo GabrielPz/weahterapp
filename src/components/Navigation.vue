@@ -10,7 +10,7 @@
         </div>
       </nav>
     </header>
-    <header v-else class="container add-city">
+    <header v-else class="container night">
       <nav>
         <router-link class="router-link" :to="{ name: 'AddCity' }">
           <i class="fas fa-plus"></i>

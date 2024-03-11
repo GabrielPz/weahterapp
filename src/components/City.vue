@@ -69,10 +69,13 @@ export default {
     },
     goToWeather(e) {
       if (e.target === this.$refs.edit) {
-        //Não executa nada caso o modo d exclusão estiver ativo
         return;
+      } else {
+        this.$router.push({
+          name: "Weather",
+          params: { city: this.city.city },
+        });
       }
-      this.$router.push({ name: "Weather", params: { city: this.city.city } });
     },
   },
 };

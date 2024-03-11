@@ -27,10 +27,18 @@ export default {
   padding-top: 81px;
   background-color: #31363d;
   width: 100%;
-  height: 100vh;
-  grid-auto-rows: 400px;
+  grid-auto-rows: auto; /* Adjust row height to content */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Flexible columns but with a minimum width */
+  gap: 20px; /* Optional: Adds some space between grid items */
+  justify-content: center; /* Centers items in the grid when there's extra space */
   @media (min-width: 400px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(200px, 1fr)
+    ); /* Ensure two items per row with a minimum width of 200px */
   }
 }
 </style>
