@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header v-if="isHomeView" class="container add-city">
+    <v-app-bar v-if="isHomeView" class="container add-city">
       <nav>
         <span>Cidades</span>
         <div class="right">
@@ -9,8 +9,8 @@
           <i @click="addCity" class="fas fa-plus"></i>
         </div>
       </nav>
-    </header>
-    <header v-else class="container" :class="{ day: isDay, night: isNight }">
+    </v-app-bar>
+    <v-app-bar v-else class="container" :class="{ day: isDay, night: isNight }">
       <nav>
         <router-link class="router-link" :to="{ name: 'AddCity' }">
           <i class="fas fa-plus"></i>
@@ -23,7 +23,7 @@
         </span>
         <span> &deg; C </span>
       </nav>
-    </header>
+    </v-app-bar>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .add-city {
-  background-color: #313640;
+  background-color: #313640 !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

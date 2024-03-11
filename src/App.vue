@@ -29,8 +29,8 @@
 
 <script>
 import axios from "axios";
-import { db } from "./firebase/firebaseinit"; // Import db from your Firebase init file
-import { collection, updateDoc, onSnapshot, query } from "firebase/firestore"; // Import Firestore methods
+import { db } from "./firebase/firebaseinit";
+import { collection, updateDoc, onSnapshot, query } from "firebase/firestore";
 import NavigationComponent from "./components/Navigation.vue";
 import ModalComponent from "./components/Modal.vue";
 
@@ -147,15 +147,15 @@ export default {
   }
 
   .day {
-    transition: 500ms ease all;
-    background-color: rgb(59, 150, 249);
+    transition: 500ms ease all !important;
+    background-color: rgb(59, 150, 249) !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   .night {
-    transition: 500ms ease all;
-    background-color: rgb(20, 42, 95);
+    transition: 500ms ease all !important;
+    background-color: rgb(20, 42, 95) !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }

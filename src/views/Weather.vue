@@ -6,6 +6,7 @@
           v-if="loading"
           :size="70"
           :width="7"
+          class="loading-spin"
           color="blue"
           indeterminate
         ></v-progress-circular>
@@ -132,6 +133,11 @@ export default {
     overflow: hidden;
     width: 100%;
     margin: 0 auto;
+  }
+  .loading-spin {
+    position: absolute;
+    top: 50%;
+    right: 50%;
   }
 }
 </style>
