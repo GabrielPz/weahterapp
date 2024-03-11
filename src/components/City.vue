@@ -1,5 +1,11 @@
 <template>
-  <div class="city">
+  <div @click="goToWeather" class="city">
+    <i
+      v-if="edit"
+      @click="removeCity"
+      class="far fa-trash-alt remove"
+      ref="edit"
+    ></i>
     <span>
       {{ this.city.city }}
     </span>
@@ -24,15 +30,71 @@
       ></video>
       <div class="bg-overlay"></div>
     </div>
+    <v-dialog width="50%" v-model="dialog" persistent>
+      <v-card>
+        <v-card-title class="text-h5">Confirmar Exclusão</v-card-title>
+        <v-card-text>Certeza que deseja excluir esta cidade?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false">Não</v-btn>
+          <v-btn color="blue darken-1" text @click="confirmRemoveCity"
+            >Sim</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
-
 <script>
+import { db } from "../firebase/firebaseinit"; // Import db from your Firebase init file
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore"; // Import Firestore methods
 export default {
   name: "CityComponent",
-  props: ["city"],
-  created() {
-    console.log(this.city);
+  props: ["city", "edit"],
+  data() {
+    return {
+      id: null,
+      overlay: false,
+      dialog: false,
+    };
+  },
+  methods: {
+    removeCity() {
+      this.dialog = true;
+    },
+    async confirmRemoveCity() {
+      try {
+        const q = query(
+          collection(db, "cities"),
+          where("city", "==", this.city.city)
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (document) => {
+          await deleteDoc(doc(db, "cities", document.id)); // Delete the document
+          this.dialog = false;
+        });
+      } catch (error) {
+        console.error("Error removing city: ", error);
+      }
+    },
+    goToWeather(e) {
+      if (e.target === this.$refs.edit) {
+        return;
+      } else {
+        this.$emit("disable-remove");
+        this.$router.push({
+          name: "Weather",
+          params: { city: this.city.city },
+        });
+      }
+    },
   },
 };
 </script>
@@ -42,11 +104,24 @@ export default {
   display: flex;
   position: relative;
   flex-direction: column;
+  cursor: pointer;
   padding: 20px;
   flex-basis: 50%;
-  min-height: 250px;
+  min-height: 400px;
   color: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  .remove {
+    border-radius: 0px 15px 0 0;
+    border: 10px solid rgb(77, 77, 77);
+    background-color: rgb(77, 77, 77);
+    z-index: 1;
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+  }
 
   span {
     z-index: 1;
@@ -70,6 +145,7 @@ export default {
     img {
       height: 20px;
       width: auto;
+      object-fit: cover;
     }
   }
 
@@ -79,10 +155,13 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 400px;
 
     video {
       height: 100%;
+      min-height: 400px;
+      width: 100%;
+      object-fit: cover;
       @media (min-width: 900px) {
         height: auto;
         width: 100%;

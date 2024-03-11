@@ -8,22 +8,60 @@
         placeholder="Procure pelo nome da cidade"
         v-model="city"
       />
+      <v-btn
+        :loading="loading"
+        :disabled="loading"
+        color="secondary"
+        @click="addCity"
+      >
+        Adicionar
+      </v-btn>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import { db } from "../firebase/firebaseinit";
+import { collection, addDoc } from "firebase/firestore";
+
 export default {
   name: "ModalComponent",
+  props: ["APIkey"],
   data() {
     return {
-      city: null,
+      city: "",
+      loading: false,
     };
   },
   methods: {
     closeModal(e) {
       if (e.target === this.$refs.modal) {
         this.$emit("close-modal");
+      }
+    },
+    async addCity() {
+      if (this.city === "") {
+        alert("Campo não pod estar vazio");
+        return;
+      }
+      this.loading = true;
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=pt_br&appid=${this.APIkey}`
+        );
+        const data = await response.data;
+        console.log(data);
+        await addDoc(collection(db, "cities"), {
+          city: this.city,
+          currentWeather: data,
+        });
+        this.city = "";
+        this.loading = false;
+        this.$emit("close-modal");
+      } catch (err) {
+        alert("Erro ao adicioanar a cidade");
+        this.loading = false;
       }
     },
   },
