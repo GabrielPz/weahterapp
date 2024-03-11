@@ -6,7 +6,6 @@ import Vuetify from 'vuetify';
 import CityComponent from '../../src/components/City.vue';
 import { db } from "../../src/firebase/firebaseinit";
 
-// Mocking the Firebase methods used in the component
 jest.mock("@/firebase/firebaseinit", () => ({
   db: {
     collection: jest.fn(() => ({
@@ -47,6 +46,4 @@ describe('CityComponent', () => {
 
     expect(wrapper.text()).toContain('Test City');
   });
-
-  // Add more tests as needed, for example, to test method functionality or prop changes
 });

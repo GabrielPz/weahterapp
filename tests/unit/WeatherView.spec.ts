@@ -50,5 +50,4 @@ describe('WeatherView.vue', () => {
     expect(wrapper.vm.$data.forecast.current.temp).toBe(22);
   });
 
-  // You can add more tests here to cover other methods and scenarios
 });
