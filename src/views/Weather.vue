@@ -10,11 +10,11 @@
         indeterminate
       ></v-progress-circular>
       <current-weather
-        v-else
         :isDay="isDay"
         :isNight="isNight"
         :currentWeather="currentWeather"
       />
+      <weather-chart :isDay="isDay" :isNight="isNight" :chartData="chartData" />
     </div>
   </div>
 </template>
@@ -24,11 +24,13 @@ import axios from "axios";
 import { db } from "../firebase/firebaseinit";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import CurrentWeather from "../components/CurrentWeather.vue";
+import WeatherChart from "../components/WeatherChart.vue";
 export default {
   name: "WeatherView",
   props: ["APIkey", "isDay", "isNight"],
   components: {
     CurrentWeather,
+    WeatherChart,
   },
   data() {
     return {
@@ -36,6 +38,7 @@ export default {
       currentWeather: null,
       loading: true,
       currentTime: null,
+      chartData: null,
     };
   },
   created() {
@@ -46,28 +49,25 @@ export default {
   },
   methods: {
     async getWeather() {
+      const end = Math.floor(Date.now() / 1000); //Dia de hoje em UNIX
+      const start = end - 5 * 24 * 60 * 60; //% dais atrás em UNIX
       try {
         const q = query(
           collection(db, "cities"),
           where("city", "==", `${this.$route.params.city}`)
         );
-        const end = Math.floor(Date.now() / 1000); //Dia de hoje em UNIX
-        const start = end - 5 * 24 * 60 * 60; //% dais atrás em UNIX
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (document) => {
           this.currentWeather = document.data().currentWeather;
           const coordinates = this.currentWeather.coord;
           axios
             .get(
-              `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&appid=${this.APIkey}`
+              `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&lang=pt_br&appid=${this.APIkey}`
             )
             .then((res) => {
               this.forecast = res.data;
-            })
-            .then(() => {
-              this.loading = false;
-              this.getCurrentTime();
             });
+          this.fetchHistoricalWeatherData(coordinates);
         });
       } catch (error) {
         console.error("Error removing city: ", error);
@@ -83,6 +83,33 @@ export default {
       } else {
         this.$emit("is-night");
       }
+    },
+    async fetchHistoricalWeatherData(coordinates) {
+      const now = Math.floor(Date.now() / 1000);
+      let historicalData = [];
+
+      for (let i = 1; i <= 5; i++) {
+        const timestamp = now - i * 24 * 60 * 60;
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/onecall/timemachine`,
+          {
+            params: {
+              lat: coordinates.lat,
+              lon: coordinates.lon,
+              dt: timestamp,
+              units: "metric",
+              appid: this.APIkey,
+            },
+          }
+        );
+
+        historicalData.push(response.data);
+        // Assuming you want to aggregate data; adjust according to your needs
+      }
+
+      this.chartData = historicalData; // Assuming you want to store all 5 days data
+      this.loading = false;
+      this.getCurrentTime();
     },
   },
 };

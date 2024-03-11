@@ -67,7 +67,7 @@ export default {
           if (change.type === "added" && !hasPendingChanges) {
             //Caso sejam cidades que já estão cadastradas no firebase, inicializar a página seus dados são atualizados
             const response = await axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&units=metric&appid=${this.APIkey}`
+              `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&units=metric&lang=pt_br&appid=${this.APIkey}`
             );
             const weatherData = response.data;
             this.cities.push({

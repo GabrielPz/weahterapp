@@ -1,37 +1,16 @@
 <template>
   <div class="current-weather">
-    <div class="container">
-      <div class="weather-info">
-        <span class="city">{{ this.currentWeather.name }}</span>
-        <span class="current-temperature"
-          >{{ Math.round(this.currentWeather.main.temp) }}C&deg;</span
-        >
-      </div>
-      <div class="high-low-temperatures">
-        <div class="high">
-          <i class="fas fa-chevron-up"></i>
-          <span>{{ Math.round(this.currentWeather.main.temp_max) }}&deg;</span>
-        </div>
-        <div class="low">
-          <i class="fas fa-chevron-down"></i>
-          <span>{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span>
-        </div>
-      </div>
-      <span class="condition">{{
-        this.currentWeather.weather[0].description
-      }}</span>
-      <span class="feels-like"
-        >Sensação Térmica
-        {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span
-      >
-    </div>
+    <div class="container"></div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import { db } from "../firebase/firebaseinit";
+import { collection, getDocs, query, where } from "firebase/firestore";
 export default {
-  name: "CurrentWeather",
-  props: ["isDay", "isNight", "currentWeather"],
+  name: "WeatherChart",
+  props: ["isDay", "isNight", "chartData"],
 };
 </script>
 
