@@ -30,17 +30,15 @@
       ></video>
       <div class="bg-overlay"></div>
     </div>
-    <v-dialog v-model="dialog" persistent>
+    <v-dialog width="50%" v-model="dialog" persistent>
       <v-card>
-        <v-card-title class="text-h5">Confirm Delete</v-card-title>
-        <v-card-text>Are you sure you want to delete this city?</v-card-text>
+        <v-card-title class="text-h5">Confirmar Exclusão</v-card-title>
+        <v-card-text>Certeza que deseja excluir esta cidade?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Cancel</v-btn
-          >
+          <v-btn color="blue darken-1" text @click="dialog = false">Não</v-btn>
           <v-btn color="blue darken-1" text @click="confirmRemoveCity"
-            >Confirm</v-btn
+            >Sim</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -106,6 +104,7 @@ export default {
   display: flex;
   position: relative;
   flex-direction: column;
+  cursor: pointer;
   padding: 20px;
   flex-basis: 50%;
   min-height: 400px;

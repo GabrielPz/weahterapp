@@ -4,7 +4,7 @@
       <nav>
         <span>Cidades</span>
         <div class="right">
-          <i @click="editCity" ref="editCities" class="far fa-edit"></i>
+          <i @click="editCity" ref="editCities" class="far fa-trash-alt"></i>
           <i @click="reloadApp" class="fas fa-sync"></i>
           <i @click="addCity" class="fas fa-plus"></i>
         </div>
@@ -77,6 +77,7 @@ header {
   .right {
     i {
       font-size: 20px;
+      cursor: pointer;
     }
 
     i:nth-child(2),
