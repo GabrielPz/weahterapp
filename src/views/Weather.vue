@@ -60,10 +60,16 @@ export default {
         querySnapshot.forEach(async (document) => {
           this.currentWeather = document.data().currentWeather;
           const coordinates = this.currentWeather.coord;
-          axios
-            .get(
-              `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&lang=pt_br&appid=${this.APIkey}`
-            )
+          const resonse = await axios
+            .get(`https://api.openweathermap.org/data/3.0/onecall`, {
+              params: {
+                lat: coordinates.lat,
+                lon: coordinates.lon,
+                units: "metrics",
+                lang: "pt_br",
+                appid: this.APIkey,
+              },
+            })
             .then((res) => {
               this.forecast = res.data;
             });
