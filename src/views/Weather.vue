@@ -14,10 +14,14 @@ export default {
       forecast: null,
       currentWeather: null,
       loading: true,
+      currentTime: null,
     };
   },
   created() {
     this.getWeather();
+  },
+  beforeDestroy() {
+    this.$emit("resetTime");
   },
   methods: {
     async getWeather() {
@@ -32,6 +36,7 @@ export default {
         querySnapshot.forEach(async (document) => {
           this.currentWeather = document.data().currentWeather;
           const coordinates = this.currentWeather.coord;
+          this.getCurrentTime();
           //   axios
           //     .get(
           //       `https://history.openweathermap.org/data/2.5/history/city?lat=${coordinates.lat}&lon=${coordinates.lon}&type=hour&start=${start}&end=${end}&appid=${this.APIkey}`
@@ -41,12 +46,24 @@ export default {
           //     })
           //     .then(() => {
           //       this.loading = false;
+          //       this.getCurrentTime();
           //       console.log(this.forecast);
           //       console.log(this.currentWeather);
           //     });
         });
       } catch (error) {
         console.error("Error removing city: ", error);
+      }
+    },
+    getCurrentTime() {
+      const dateObject = new Date();
+      this.currentTime = dateObject.getHours();
+      const sunrise = new Date(this.currentWeather.sunrise * 1000).getHours();
+      const sunset = new Date(this.currentWeather.sunset * 1000).getHours();
+      if (this.currentTime > sunrise && this.currentTime < sunset) {
+        this.$emit("is-day");
+      } else {
+        this.$emit("is-night");
       }
     },
   },

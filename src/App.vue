@@ -9,8 +9,17 @@
       v-on:add-city="toggleModal"
       v-on:edit-city="toggleEdit"
       :isHomeView="isHomeView"
+      :isDay="isDay"
+      :isNight="isNight"
     />
-    <router-view :cities="cities" :edit="edit" :APIkey="APIkey" />
+    <router-view
+      :cities="cities"
+      :edit="edit"
+      :APIkey="APIkey"
+      v-on:is-day="dayTime"
+      v-on:is-night="nightTime"
+      v-on:resetTime="resetTime"
+    />
   </div>
 </template>
 
@@ -30,6 +39,8 @@ export default {
   data() {
     return {
       APIkey: "91fc93d15a4ac9726b4b3ed681c1b3a3",
+      isDay: null,
+      isNight: null,
       cities: [],
       modalOpen: null,
       edit: null,
@@ -90,6 +101,16 @@ export default {
         return;
       }
       this.isHomeView = false;
+    },
+    dayTime() {
+      this.isDay = !this.isDay;
+    },
+    nightTime() {
+      this.isNight = !this.isNight;
+    },
+    resetTime() {
+      this.isDay = false;
+      this.isNight = false;
     },
   },
   watch: {

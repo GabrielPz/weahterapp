@@ -10,16 +10,18 @@
         </div>
       </nav>
     </header>
-    <header v-else class="container night">
+    <header v-else class="container" :class="{ day: isDay, night: isNight }">
       <nav>
         <router-link class="router-link" :to="{ name: 'AddCity' }">
           <i class="fas fa-plus"></i>
         </router-link>
         <span>
-          {{ new Date().toLocaleString("pt-br", { weekday: "short" }) }},
-          {{ new Date().toLocaleString("pt-br", { month: "short" }) }}
+          {{ new Date().toLocaleString("pt-br", { weekday: "long" }) }},
           {{ new Date().toLocaleString("pt-br", { day: "2-digit" }) }}
+          de
+          {{ new Date().toLocaleString("pt-br", { month: "long" }) }}
         </span>
+        <span> &deg; C </span>
       </nav>
     </header>
   </div>
@@ -28,7 +30,7 @@
 <script>
 export default {
   name: "NavigationComponent",
-  props: ["isHomeView"],
+  props: ["isHomeView", "isDay", "isNight"],
   methods: {
     addCity() {
       this.$emit("add-city");
