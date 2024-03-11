@@ -37,14 +37,25 @@ export default {
 
       return [
         {
-          name: "Temperature",
+          name: "Temperatura",
           data: temps,
         },
         {
-          name: "Feels Like",
+          name: "Sensação Térmica",
           data: feelsLike,
         },
       ];
+    },
+    xaxisCategories() {
+      if (!this.chartData) {
+        return [];
+      }
+
+      // Convert UNIX timestamp (dt) to a human-readable date
+      return this.chartData.map((data) => {
+        const date = new Date(data.dt * 1000);
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; // Format: YYYY-MM-DD
+      });
     },
   },
   data: () => {
@@ -65,18 +76,18 @@ export default {
             show: false,
           },
         },
-        colors: ["#77B6EA", "#545454"],
+        colors: ["#00AAFF", "#FFA500"],
         dataLabels: {
           enabled: true,
           style: {
-            colors: ["#fff"], // White color for data labels
+            colors: ["#000"], // White color for data labels
           },
         },
         stroke: {
           curve: "smooth",
         },
         title: {
-          text: "Average High & Low Temperature",
+          text: "Temperatua média & Sensação Térmica",
           align: "left",
           style: {
             color: "#fff", // White color for the title
@@ -86,16 +97,16 @@ export default {
           borderColor: "#e7e7e7",
           row: {
             colors: ["#f3f3f3", "transparent"], // Adjust as needed
-            opacity: 0.5,
+            opacity: 0.2,
           },
         },
         markers: {
           size: 1,
         },
         xaxis: {
-          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+          categories: [],
           title: {
-            text: "Month",
+            text: "Dias",
             style: {
               color: "#fff", // White color for x-axis title
             },
@@ -131,6 +142,38 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    generateDateLabels() {
+      let labels = [];
+      for (let i = 5; i > 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        labels.push(
+          `${date.getFullYear()}-${this.padTo2Digits(
+            date.getMonth() + 1
+          )}-${this.padTo2Digits(date.getDate())}`
+        );
+      }
+      return labels;
+    },
+
+    padTo2Digits(num) {
+      return num.toString().padStart(2, "0");
+    },
+    getLast5Days() {
+      const dates = [];
+      for (let i = 5; i > 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        dates.push(
+          `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
+            "0" + date.getDate()
+          ).slice(-2)}`
+        );
+      }
+      return dates;
+    },
   },
 };
 </script>
