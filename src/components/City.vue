@@ -85,7 +85,7 @@ export default {
   flex-direction: column;
   padding: 20px;
   flex-basis: 50%;
-  min-height: 250px;
+  min-height: 400px;
   color: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
@@ -123,6 +123,7 @@ export default {
     img {
       height: 20px;
       width: auto;
+      object-fit: cover;
     }
   }
 
@@ -132,10 +133,13 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 400px;
 
     video {
       height: 100%;
+      min-height: 400px;
+      width: 100%;
+      object-fit: cover;
       @media (min-width: 900px) {
         height: auto;
         width: 100%;

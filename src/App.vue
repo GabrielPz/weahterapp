@@ -8,6 +8,7 @@
     <NavigationComponent
       v-on:add-city="toggleModal"
       v-on:edit-city="toggleEdit"
+      :isHomeView="isHomeView"
     />
     <router-view :cities="cities" :edit="edit" :APIkey="APIkey" />
   </div>
@@ -16,12 +17,7 @@
 <script>
 import axios from "axios";
 import { db } from "./firebase/firebaseinit"; // Import db from your Firebase init file
-import {
-  collection,
-  updateDoc,
-  onSnapshot,
-  query,
-} from "firebase/firestore"; // Import Firestore methods
+import { collection, updateDoc, onSnapshot, query } from "firebase/firestore"; // Import Firestore methods
 import NavigationComponent from "./components/Navigation.vue";
 import ModalComponent from "./components/Modal.vue";
 
@@ -37,10 +33,12 @@ export default {
       cities: [],
       modalOpen: null,
       edit: null,
+      isHomeView: null,
     };
   },
   created() {
     this.getCityWeather();
+    this.checkRoute();
   },
   methods: {
     async getCityWeather() {
@@ -55,7 +53,7 @@ export default {
           if (change.type === "added" && !hasPendingChanges) {
             //Caso sejam cidades que já estão cadastradas no firebase, inicializar a página seus dados são atualizados
             const response = await axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&appid=${this.APIkey}`
+              `https://api.openweathermap.org/data/2.5/weather?q=${cityData.city}&units=metric&appid=${this.APIkey}`
             );
             const weatherData = response.data;
             this.cities.push({
@@ -86,6 +84,18 @@ export default {
     toggleEdit() {
       this.edit = !this.edit;
     },
+    checkRoute() {
+      if (this.$route.name === "AddCity") {
+        this.isHomeView = true;
+        return;
+      }
+      this.isHomeView = false;
+    },
+  },
+  watch: {
+    $route() {
+      this.checkRoute();
+    },
   },
 };
 </script>
@@ -99,11 +109,11 @@ export default {
 }
 
 .main {
-  max-width: 1024px;
+  /* max-width: 1024px; */
+  width: 100%;
   margin: 0 auto;
   height: 100vh;
   display: flex;
-  justify-content: center; /* Centraliza a MOdal */
   .container {
     padding: 0 20px;
   }
