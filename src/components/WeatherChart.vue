@@ -46,17 +46,6 @@ export default {
         },
       ];
     },
-    xaxisCategories() {
-      if (!this.chartData) {
-        return [];
-      }
-
-      // Convert UNIX timestamp (dt) to a human-readable date
-      return this.chartData.map((data) => {
-        const date = new Date(data.dt * 1000);
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; // Format: YYYY-MM-DD
-      });
-    },
   },
   data: () => {
     return {
@@ -104,9 +93,9 @@ export default {
           size: 1,
         },
         xaxis: {
-          categories: [],
+          categories: ["5", "4", "3", "2", "1"],
           title: {
-            text: "Dias",
+            text: "Dias atrás",
             style: {
               color: "#fff", // White color for x-axis title
             },
@@ -131,6 +120,7 @@ export default {
           },
         },
         legend: {
+          color: "#fff",
           position: "top",
           horizontalAlign: "right",
           floating: true,
@@ -144,32 +134,16 @@ export default {
     };
   },
   methods: {
-    generateDateLabels() {
-      let labels = [];
-      for (let i = 5; i > 0; i--) {
-        let date = new Date();
-        date.setDate(date.getDate() - i);
-        labels.push(
-          `${date.getFullYear()}-${this.padTo2Digits(
-            date.getMonth() + 1
-          )}-${this.padTo2Digits(date.getDate())}`
-        );
-      }
-      return labels;
-    },
-
-    padTo2Digits(num) {
-      return num.toString().padStart(2, "0");
-    },
     getLast5Days() {
       const dates = [];
-      for (let i = 5; i > 0; i--) {
+      for (let i = 4; i >= 0; i--) {
         const date = new Date();
         date.setDate(date.getDate() - i);
         dates.push(
-          `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${(
-            "0" + date.getDate()
-          ).slice(-2)}`
+          `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            "0"
+          )}-${String(date.getDate()).padStart(2, "0")}`
         );
       }
       return dates;
