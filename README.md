@@ -30,6 +30,14 @@ npm run test:e2e
 npm run lint
 ```
 
+### Tecnologias
+-[x] Prettier
+-[x] EsLint
+-[x] Vuetify
+-[x] ApexCharts
+-[x] Jest
+-[x] Typescript
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
