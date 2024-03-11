@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <v-app data-app class="main">
     <modal-component
       v-if="modalOpen"
       v-on:close-modal="toggleModal"
@@ -19,8 +19,9 @@
       v-on:is-day="dayTime"
       v-on:is-night="nightTime"
       v-on:resetTime="resetTime"
+      v-on:edit-city="toggleEdit"
     />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -133,7 +134,7 @@ export default {
   /* max-width: 1024px; */
   width: 100% !important;
   margin: 0 auto;
-  height: 100vh;
+  height: 100vh !important;
   display: flex;
   .container {
     padding: 0 20px;

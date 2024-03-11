@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="city-link" v-for="(city, index) in cities" v-bind:key="index">
-      <city-component :city="city" :edit="edit" />
+      <city-component v-on:edit-city="toggleEdit" :city="city" :edit="edit" />
     </div>
   </div>
 </template>
@@ -18,6 +18,11 @@ export default {
   components: {
     CityComponent,
   },
+  methods: {
+    toggleEdit() {
+      this.$emit("edit-city");
+    },
+  },
 };
 </script>
 
@@ -27,6 +32,7 @@ export default {
   padding-top: 81px;
   background-color: #31363d;
   width: 100%;
+  height: 100%;
   grid-auto-rows: auto; /* Adjust row height to content */
   grid-template-columns: repeat(
     auto-fill,
