@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      APIkey: process.env.VUE_APP_API_KEY, 
+      APIkey: process.env.VUE_APP_API_KEY,
       isDay: null,
       isNight: null,
       cities: [],
